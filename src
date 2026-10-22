@@ -1,0 +1,69 @@
+import networkx as nx
+import argparse
+import matplotlib.pyplot as plt
+
+def generate_fat_tree(k):
+    """
+    Generates a Fat-Tree topology based on the number of ports (k).
+    """
+    G = nx.Graph()
+    
+    # Calculate number of switches and hosts
+    num_core = (k // 2) ** 2
+    num_pods = k
+    num_agg_per_pod = k // 2
+    num_edge_per_pod = k // 2
+    hosts_per_edge = k // 2
+    
+    # Add Core Switches
+    core_switches = [f"Core_{i}" for i in range(num_core)]
+    G.add_nodes_from(core_switches, layer='core')
+    
+    # Build Pods
+    for p in range(num_pods):
+        agg_switches = [f"Pod_{p}_Agg_{i}" for i in range(num_agg_per_pod)]
+        edge_switches = [f"Pod_{p}_Edge_{i}" for i in range(num_edge_per_pod)]
+        
+        G.add_nodes_from(agg_switches, layer='aggregation')
+        G.add_nodes_from(edge_switches, layer='edge')
+        
+        # Connect Edge to Aggregation within the pod
+        for edge in edge_switches:
+            for agg in agg_switches:
+                G.add_edge(edge, agg)
+                
+        # Connect Aggregation to Core
+        for i, agg in enumerate(agg_switches):
+            stride = k // 2
+            start_core_idx = i * stride
+            for j in range(stride):
+                core = core_switches[start_core_idx + j]
+                G.add_edge(agg, core)
+                
+        # Add Hosts and connect to Edge
+        for i, edge in enumerate(edge_switches):
+            for h in range(hosts_per_edge):
+                host_name = f"Host_P{p}_E{i}_H{h}"
+                G.add_node(host_name, layer='host')
+                G.add_edge(host_name, edge)
+                
+    return G
+
+def main():
+    parser = argparse.ArgumentParser(description="Fat-Tree Topology Generator")
+    parser.add_argument('-k', type=int, default=4, help="Number of ports per switch (k-ary Fat-Tree)")
+    parser.add_argument('--failure-rate', type=float, default=0.0, help="Percentage of link failures (0.0 to 1.0)")
+    args = parser.parse_args()
+
+    print(f"Generating a {args.k}-ary Fat-Tree topology...")
+    topology = generate_fat_tree(args.k)
+    
+    print(f"Topology generated successfully!")
+    print(f"Total Nodes: {topology.number_of_nodes()}")
+    print(f"Total Edges: {topology.number_of_edges()}")
+    
+    # Note: For the next submission, you will implement the failure modeling
+    # and metric analysis using args.failure_rate here.
+
+if __name__ == "__main__":
+    main()
