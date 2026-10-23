@@ -16,7 +16,7 @@ from fattree import (
 )
 
 
-RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+RESULTS = os.path.dirname(os.path.abspath(__file__))
 
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]
 INK, MUTED, GRID = "#1f2328", "#59636e", "#d8dee4"
@@ -181,11 +181,10 @@ def plot_scale(rows):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Run fat-tree experiments 1-3 and write results/")
+    p = argparse.ArgumentParser(description="Run fat-tree experiments 1-3 and save the plots next to this script")
     p.add_argument("--quick", action="store_true", help="few trials, for a smoke test")
     p.add_argument("--seed", type=int, default=2026)
     args = p.parse_args()
-    os.makedirs(RESULTS, exist_ok=True)
 
     path_ks = [4, 8, 12, 16]
     pcts = [0, 1, 2, 5, 10, 15, 20, 30, 40, 50]

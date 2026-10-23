@@ -1,6 +1,6 @@
 # Fat-Tree Topology Generator and Failure Analysis
 
-
+Homework 1, *Communication Networks for Data Centers and AI* (2026).
 
 This project generates three-tier **k-ary fat-tree** data-center topologies
 following Al-Fares et al. [1], injects random **link failures**, and measures how
@@ -173,7 +173,7 @@ count `k` change the answer?
 - 30 independent random failure sets per (k, p) point, with a fixed master seed of 2026
 - the curves show the mean, and the shaded bands show ±1 standard deviation
 
-![Experiment 1](results/exp1_paths_vs_failures.png)
+![Experiment 1](exp1_paths_vs_failures.png)
 
 Selected values (means over 30 trials):
 
@@ -235,7 +235,7 @@ attention. How does that number scale with network size?
   E[count] = Σ_switches P(X ≥ 2)
 - edge switches have d = k/2 (uplinks only), and aggregation and core switches have d = k
 
-![Experiment 2](results/exp2_multi_failure_switches.png)
+![Experiment 2](exp2_multi_failure_switches.png)
 
 | k | failed links | switches | ≥2-failure switches (sim, mean ± std) | theory | share |
 |---|---|---|---|---|---|
@@ -271,7 +271,7 @@ super-linear growth, not just by the raw link count.
 **Setup.** Closed-form sizes for k ∈ {4, 8, 16, 32, 48, 64}. The generator
 reproduces them exactly, as checked by the unit tests for k ≤ 12.
 
-![Experiment 3](results/exp3_scale.png)
+![Experiment 3](exp3_scale.png)
 
 | k | hosts (k³/4) | switches (5k²/4) | links (3k³/4) |
 |---|---|---|---|
@@ -293,9 +293,9 @@ up as straight lines.
 
 ```
 fattree.py        generator, failure model, metrics and command-line interface
-experiments.py    runs experiments 1–3 and writes the plots to results/
+experiments.py    runs experiments 1–3 and saves the three plots
 test_fattree.py   pytest suite (53 tests)
-results/          the three plots shown above
+exp1_*.png, exp2_*.png, exp3_*.png   the three plots shown above
 requirements.txt  Python dependencies
 ```
 
