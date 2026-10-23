@@ -1,6 +1,6 @@
 # Fat-Tree Topology Generator and Failure Analysis
 
-Homework 1, *Communication Networks for Data Centers and AI* (2026).
+
 
 This project generates three-tier **k-ary fat-tree** data-center topologies
 following Al-Fares et al. [1], injects random **link failures**, and measures how
