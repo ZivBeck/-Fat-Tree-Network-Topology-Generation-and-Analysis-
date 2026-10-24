@@ -299,19 +299,6 @@ exp1_*.png, exp2_*.png, exp3_*.png   the three plots shown above
 requirements.txt  Python dependencies
 ```
 
-## AI usage
-
-This project was developed with the help of **Claude (Anthropic, Claude Code,
-model Claude Opus 5.5)**. It was used to:
-
-- analyse the assignment
-- draft the generator, failure model, metrics, experiment script and tests
-- draft this README
-
-All code was reviewed, run and tested by me. The metric implementation is
-cross-checked against a brute-force reference, and the simulated results are
-cross-checked against closed-form theory. I take full responsibility for the
-submitted work.
 
 ## References
 
